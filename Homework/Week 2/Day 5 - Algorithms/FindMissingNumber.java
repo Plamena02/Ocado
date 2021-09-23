@@ -11,7 +11,7 @@ class FindMissingNumber{
 		System.out.println("Write array of integers separated by a space:");
 		var input = Arrays.stream(reader.readLine().split(", ")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
         var result = new ArrayList<Integer>();
-		for (int i = 1; i < input.size()-1; i++)
+		for (int i = 1; i < input.get(input.size()-1); i++)
 		{
             if(!input.contains(i))
             {
