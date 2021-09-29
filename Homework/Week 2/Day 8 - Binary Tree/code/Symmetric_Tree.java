@@ -1,10 +1,9 @@
-import java.util.ArrayList;
+package week2.BinaryTree;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
-public class Invert_Binary_Tree {
+public class Symmetric_Tree {
 
     public static class TreeNode {
         Integer val;
@@ -32,9 +31,10 @@ public class Invert_Binary_Tree {
         }
     
         Queue<TreeNode> treeNodeQueue = new LinkedList<>();
-        Queue<Integer> integerQueue = new LinkedList<>(Arrays.asList(array));
+        Queue<Integer> integerQueue = new LinkedList<>(Arrays.asList(Arrays.copyOfRange(array, 1, array.length)));
 
-       TreeNode treeNode = new TreeNode(array[0]);
+    
+        TreeNode treeNode = new TreeNode(array[0]);
         treeNodeQueue.offer(treeNode);
     
         while (!integerQueue.isEmpty()){
@@ -62,28 +62,24 @@ public class Invert_Binary_Tree {
         System.out.print(root.val + " ");
         Print(root.right);
     }
-    public static void main(String args[]) { new Invert_Binary_Tree().Test(new Integer[] {4, 2, 7, 1, 3, 6, 9});}
 
-    public Integer[] Test(Integer[] arr)
-    {
-        Print(Insert(arr));
-        invertTree(Insert(arr));
-        return result.stream().toArray(Integer[]::new);
+    public static void main(String args[]) { }
+
+    public boolean Test(Integer[] arr) {
+        
+        // System.out.println(isSymmetric(Insert(arr)));
+        return isSymmetric(Insert(arr));
     }
 
-    public List<Integer> result = new ArrayList<Integer>();
-
-    public void invertTree(TreeNode root) {
-        
-        if (root == null) return;
-
-        TreeNode temp = root.right;
-        root.right = root.left;
-        root.left = temp;
-
-        invertTree(root.left);
-        result.add(root.val);
-        invertTree(root.right);
-
-    } 
+    public boolean isSymmetric(TreeNode root) {
+    
+        return isMirror(root.left, root.right);
+    }
+    
+    public boolean isMirror(TreeNode root1, TreeNode root2)
+    {
+        if(root1 == null && root2 == null) return true;
+        if(root1 == null || root2 == null) return false;
+        return (root1.val == root2.val) && isMirror(root1.right,root2.left) && isMirror(root1.left,root2.right);
+    }
 }

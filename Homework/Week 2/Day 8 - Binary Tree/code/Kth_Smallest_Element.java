@@ -1,15 +1,14 @@
+package week2.BinaryTree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Binary_Tree_Inorder_Traversal {
-    // Definition for a binary tree node.
+public class Kth_Smallest_Element {
     public static class TreeNode {
         Integer val;
         TreeNode left;
-		dkdk
         TreeNode right;
 
         TreeNode() {
@@ -33,7 +32,7 @@ public class Binary_Tree_Inorder_Traversal {
         }
     
         Queue<TreeNode> treeNodeQueue = new LinkedList<>();
-        Queue<Integer> integerQueue = new LinkedList<>(Arrays.asList(array));
+        Queue<Integer> integerQueue = new LinkedList<>(Arrays.asList(Arrays.copyOfRange(array, 1, array.length)));
 
        TreeNode treeNode = new TreeNode(array[0]);
         treeNodeQueue.offer(treeNode);
@@ -64,25 +63,31 @@ public class Binary_Tree_Inorder_Traversal {
         Print(root.right);
     }
 
-    public static void main(String args[]) {
-        new Binary_Tree_Inorder_Traversal().Test(new Integer[]{1, null, 2, 3});
+    public static void main(String args[]) { new Kth_Smallest_Element().Test(new Integer[]{10,8,15,null,null,12}, 2); }
+
+    public List<Integer> list;
+
+    public int Test(Integer[] arr, int k)
+    {
+        list = new ArrayList<Integer>();
+        TreeNode tree = Insert(arr);
+        System.out.println(kthSmallest(tree, k));
+        return kthSmallest(tree, k);
     }
-
-    public Integer[] Test(Integer[] arr) {
-        // Print(Insert(arr));
-        System.out.println(inorderTraversal(Insert(arr)));
-        return inorderTraversal(Insert(arr)).stream().toArray(Integer[]::new);
+    
+    public Integer kthSmallest(TreeNode root, int k) {
+        fillList(root);
+        // Collections.sort(list);
+        return list.get(k-1);
     }
-
-    public List<Integer> list = new ArrayList<Integer>();
-
-    public List<Integer> inorderTraversal(TreeNode root) {
-        if (root == null)
-            return list;
-        // System.out.println(root.val);
-        inorderTraversal(root.left);
-        list.add(root.val);
-        inorderTraversal(root.right);
-        return list;
+    
+    public void fillList(TreeNode root)
+    {
+        if(root == null) return;
+        
+        fillList(root.left);
+        if(root.val != null) list.add(root.val);
+        fillList(root.right);
+        return;
     }
 }

@@ -1,8 +1,12 @@
+package week2.BinaryTree;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
-public class Range_Sum_of_BST {
+public class Binary_Tree_Inorder_Traversal {
+    // Definition for a binary tree node.
     public static class TreeNode {
         Integer val;
         TreeNode left;
@@ -29,7 +33,7 @@ public class Range_Sum_of_BST {
         }
     
         Queue<TreeNode> treeNodeQueue = new LinkedList<>();
-        Queue<Integer> integerQueue = new LinkedList<>(Arrays.asList(array));
+        Queue<Integer> integerQueue = new LinkedList<>(Arrays.asList(Arrays.copyOfRange(array, 1, array.length)));
 
        TreeNode treeNode = new TreeNode(array[0]);
         treeNodeQueue.offer(treeNode);
@@ -51,45 +55,36 @@ public class Range_Sum_of_BST {
         }
         return treeNode;
     }
-    
+
     public static void Print(TreeNode root) {
         if (root == null)
-        return;
+            return;
         Print(root.left);
         System.out.print(root.val + " ");
         Print(root.right);
     }
-    
-    public static void main(String args[])
-	{ }
-    
-    public int Test(Integer[] array, int low, int high)
-    {
-        return rangeSumBST(Insert(array), low, high);
+
+    public static void main(String args[]) {
+        Integer[] test = new Binary_Tree_Inorder_Traversal().Test(new Integer[]{1, null, 2, 3});
+        for(int i = 0; i < test.length; i++) System.out.println(test[i]);
     }
 
-    private int sum = 0;
-    private int low;
-    private int high;
-
-    public int rangeSumBST(TreeNode root, int l, int h) {
-        if(root == null) return sum;
-
-        high = h;
-        low = l;
-
-        calculateSum(root);
-        return sum;
+    public Integer[] Test(Integer[] arr) {
+        // Print(Insert(arr));
+        list = new ArrayList<Integer>();
+        // System.out.println(inorderTraversal(Insert(arr)));
+        return inorderTraversal(Insert(arr)).stream().toArray(Integer[]::new);
     }
 
-    private void calculateSum(TreeNode root)
-    {
-        if(root == null) return;
+    public List<Integer> list;
 
-        calculateSum(root.left);
-
-        if(root.val >= low && root.val <= high) sum += root.val;
-
-        calculateSum(root.right);
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if (root == null)
+            return list;
+        // System.out.println(root.val);
+        inorderTraversal(root.left);
+        list.add(root.val);
+        inorderTraversal(root.right);
+        return list;
     }
 }

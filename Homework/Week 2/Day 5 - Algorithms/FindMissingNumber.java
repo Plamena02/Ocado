@@ -1,24 +1,27 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
+package week2.Algorithms;
 
-class FindMissingNumber{
-	public static void main(String args[]) throws IOException{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Write array of integers separated by a space:");
-		var input = Arrays.stream(reader.readLine().split(", ")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+import java.util.ArrayList;
+
+public class FindMissingNumber{
+	public ArrayList<Integer> missingNumbersFrom1ToN(Integer[] input){
         var result = new ArrayList<Integer>();
-		for (int i = 1; i < input.get(input.size()-1); i++)
+		if(input.length == 0) return result;
+		for (int i = 1; i < input[input.length-1]; i++)
 		{
-            if(!input.contains(i))
+            if(!contains(input, i))
             {
                 result.add(i);
             }
 		}
-        System.out.println(result);
+        return result;
+	}
+	private boolean contains(Integer[] array, Integer element){
+
+		for(int i = 0; i < array.length; i++)
+			if(array[i] == element) return true;
+
+		return false;
+
 	}
 }
 
